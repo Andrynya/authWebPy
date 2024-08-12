@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Редактирование профиля{% endblock %}
+{% block content %}
+<h1>Редактирование профиля</h1>
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        <ul>
+        {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+<form method="POST">
+    <label for="username">Имя пользователя:</label>
+    <input type="text" id="username" name="username" value="{{ username }}" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" value="{{ email }}" required>
+
+    <h2>Изменение пароля (необязательно)</h2>
+    <label for="old_password">Старый пароль:</label>
+    <input type="password" id="old_password" name="old_password">
+
+    <label for="new_password">Новый пароль:</label>
+    <input type="password" id="new_password" name="new_password">
+
+    <label for="confirm_new_password">Подтверждение нового пароля:</label>
+    <input type="password" id="confirm_new_password" name="confirm_new_password">
+
+    <button type="submit">Сохранить изменения</button>
+</form>
+{% endblock %}

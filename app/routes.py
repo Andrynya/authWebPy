@@ -47,3 +47,23 @@ def logout():
 @login_required
 def account():
     return render_template('account.html')
+
+
+@app.route('/edit_profile', methods=['GET', 'POST'])
+@login_required  # Убедитесь, что пользователь вошел в систему
+def edit_profile():
+    # Получаем текущего пользователя
+    user = current_user
+
+    if request.method == 'POST':
+        # Получаем новые данные из формы
+        user.username = request.form.get('username')
+        user.email = request.form.get('email')
+
+        # Сохраняем изменения в базе данных
+        db.session.commit()
+
+        flash('Профиль успешно обновлен!', 'success')
+        return redirect(url_for('edit_profile'))
+
+    return render_template('edit_profile.html', username=user.username, email=user.email)
